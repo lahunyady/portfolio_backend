@@ -1,4 +1,4 @@
-package laszlo.hunyady.portfolio;
+package laszlo.hunyady.portfolio.mail;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,5 +19,4 @@ public class MailRequest {
     private String email;
     @NotEmpty
     private String message;
-
 }
