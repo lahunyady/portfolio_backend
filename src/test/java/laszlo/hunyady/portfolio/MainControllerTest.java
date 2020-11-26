@@ -1,6 +1,7 @@
 package laszlo.hunyady.portfolio;
 
 
+import laszlo.hunyady.portfolio.rule.CreateMailRequestRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Spy;
@@ -14,12 +15,14 @@ import static org.junit.Assert.assertTrue;
 @RunWith(MockitoJUnitRunner.class)
 public class MainControllerTest {
 
+    private CreateMailRequestRule mail = new CreateMailRequestRule().withValidEmail();
+
     @Spy
     private MainController controller;
 
     @Test
-    public void sanity_test() {
-        ResponseEntity<HttpStatus> email = controller.email(null);
+    public void sanity() {
+        ResponseEntity<HttpStatus> email = controller.email(mail.getMailRequest());
 
         assertNotNull(email);
         assertNotNull(email.getBody());
