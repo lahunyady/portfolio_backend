@@ -1,6 +1,7 @@
 package laszlo.hunyady.portfolio;
 
 
+import laszlo.hunyady.portfolio.rule.MailRequestHelper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Spy;
@@ -18,8 +19,8 @@ public class MainControllerTest {
     private MainController controller;
 
     @Test
-    public void sanity_test() {
-        ResponseEntity<HttpStatus> email = controller.email(null);
+    public void sanity() {
+        ResponseEntity<HttpStatus> email = controller.email(MailRequestHelper.getValidEmail());
 
         assertNotNull(email);
         assertNotNull(email.getBody());
