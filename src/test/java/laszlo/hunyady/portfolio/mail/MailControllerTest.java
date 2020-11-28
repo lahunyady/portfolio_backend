@@ -1,4 +1,4 @@
-package laszlo.hunyady.portfolio;
+package laszlo.hunyady.portfolio.mail;
 
 
 import org.junit.Before;
@@ -20,14 +20,14 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class MainControllerTest {
+public class MailControllerTest {
 
     @Mock
     private JavaMailSender mailSender;
 
     @Spy
     @InjectMocks
-    private MainController controller;
+    private MailController controller;
 
     @Before
     public void setup() {

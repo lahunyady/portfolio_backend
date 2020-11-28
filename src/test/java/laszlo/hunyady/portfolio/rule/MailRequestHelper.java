@@ -1,6 +1,6 @@
 package laszlo.hunyady.portfolio.rule;
 
-import laszlo.hunyady.portfolio.MailRequest;
+import laszlo.hunyady.portfolio.mail.MailRequest;
 
 public class MailRequestHelper {
 
