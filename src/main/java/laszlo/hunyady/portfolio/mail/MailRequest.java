@@ -14,6 +14,8 @@ import javax.validation.constraints.NotEmpty;
 @AllArgsConstructor
 public class MailRequest {
     @NotEmpty
+    private String languageCode;
+    @NotEmpty
     private String name;
     @Email
     private String email;
