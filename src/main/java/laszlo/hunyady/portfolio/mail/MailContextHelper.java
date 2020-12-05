@@ -27,7 +27,13 @@ public class MailContextHelper {
         context.setVariable("message", mail.getMessage());
         context.setVariable("name", mail.getName());
         context.setVariable("email", mail.getEmail());
+        addFooterContext(context);
         return context;
+    }
+
+    private void addFooterContext(Context context) {
+        context.setVariable("position", "Backend fejlesztő");
+        context.setVariable("copyright", "© HUNYADY LÁSZLÓ 2020-2020 minden jog fenntartva.");
     }
 
     public Context buildThanksMailContext(MailRequest mail) {
@@ -36,6 +42,7 @@ public class MailContextHelper {
         context.setVariable("mail_body", BODY_EMAIL_PRE + mail.getEmail() + BODY_EMAIL_POST);
         context.setVariable("farewell", FAREWELL);
         context.setVariable("sign", SIGN);
+        addFooterContext(context);
         return context;
     }
 }
