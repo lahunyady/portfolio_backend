@@ -36,7 +36,7 @@ public class MailControllerTest {
 
     @Test
     public void emailResponseOk() {
-        ResponseEntity<HttpStatus> email = controller.email(getValidEmail());
+        ResponseEntity<HttpStatus> email = controller.sendContactMail(getValidEmail());
 
         assertNotNull(email);
         assertNotNull(email.getBody());
@@ -47,7 +47,7 @@ public class MailControllerTest {
     public void emailArgumentOk() {
         ArgumentCaptor<SimpleMailMessage> captor = ArgumentCaptor.forClass(SimpleMailMessage.class);
 
-        controller.email(getValidEmail());
+        controller.sendContactMail(getValidEmail());
 
         verify(mailSender, times(1)).send(captor.capture());
         assertEquals(getValidEmail().getEmail(), captor.getValue().getFrom());

@@ -31,11 +31,6 @@ public class MailContextHelper {
         return context;
     }
 
-    private void addFooterContext(Context context) {
-        context.setVariable("position", "Backend fejlesztő");
-        context.setVariable("copyright", "© HUNYADY LÁSZLÓ 2020-2020 minden jog fenntartva.");
-    }
-
     public Context buildThanksMailContext(MailRequest mail) {
         Context context = new Context();
         context.setVariable("greetings", NAME_PRE + mail.getName() + NAME_POST);
@@ -44,5 +39,10 @@ public class MailContextHelper {
         context.setVariable("sign", SIGN);
         addFooterContext(context);
         return context;
+    }
+
+    private void addFooterContext(Context context) {
+        context.setVariable("position", "Backend fejlesztő");
+        context.setVariable("copyright", "© HUNYADY LÁSZLÓ 2020-2020 minden jog fenntartva.");
     }
 }

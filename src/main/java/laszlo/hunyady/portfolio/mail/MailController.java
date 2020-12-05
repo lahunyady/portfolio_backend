@@ -20,10 +20,10 @@ public class MailController {
     private MailService mailSender;
 
     @PostMapping("/send")
-    public ResponseEntity<HttpStatus> email(@RequestBody @Valid MailRequest mailData) {
+    public ResponseEntity<HttpStatus> sendContactMail(@RequestBody @Valid MailRequest mailData) {
         log.info("Send mail endpoint called with body: {} ", mailData);
 
-        mailSender.send(mailData);
+        mailSender.processContactMail(mailData);
 
         return ResponseEntity.ok(HttpStatus.OK);
     }
