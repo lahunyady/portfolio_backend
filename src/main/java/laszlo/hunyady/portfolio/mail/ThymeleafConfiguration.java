@@ -1,4 +1,4 @@
-package com.javabydeveloper.config;
+package laszlo.hunyady.portfolio.mail;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -23,16 +23,17 @@ public class MailServiceImpl implements MailService {
     private String mailBotAddress;
 
     @Autowired
-    private MailContextHelper contextHelper;
-    @Autowired
     private JavaMailSender mailSender;
+    @Autowired
+    private MailContextHelper contextHelper;
     @Autowired
     private SpringTemplateEngine templateEngine;
 
-    public void send(MailRequest mail) {
+    @Override
+    public void processContactMail(MailRequest mail) {
         try {
             mailSender.send(buildContactMail(mail));
-            mailSender.send(buildThanksMail(mail));
+            mailSender.send(buildThanksForContactingMail(mail));
         } catch (MessagingException e) {
             throw new ServerErrorException("Not proper mail data.", e);
         }
@@ -48,7 +49,7 @@ public class MailServiceImpl implements MailService {
         return mimeMessage;
     }
 
-    private MimeMessage buildThanksMail(MailRequest mail) throws MessagingException {
+    private MimeMessage buildThanksForContactingMail(MailRequest mail) throws MessagingException {
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED, StandardCharsets.UTF_8.name());
         helper.setFrom(mailBotAddress);
