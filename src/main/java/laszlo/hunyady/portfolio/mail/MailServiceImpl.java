@@ -11,16 +11,20 @@ import org.thymeleaf.spring5.SpringTemplateEngine;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.nio.charset.StandardCharsets;
+import java.util.Locale;
 
 @Service
 public class MailServiceImpl implements MailService {
     public static final String CONTACT_THANK_YOU_MAIL = "contact_thank_you_mail";
     public static final String MAIL = "mail";
 
-    @Value("${mail.contact.subject}")
-    private String contact;
-    @Value("${mail.bot.address}")
+    @Autowired
+    private Localizator loc;
+
+    @Value("${spring.mail.username}")
     private String mailBotAddress;
+    @Value("${mail.language.code}")
+    private String mailBotLanguageCode;
 
     @Autowired
     private JavaMailSender mailSender;
@@ -32,7 +36,9 @@ public class MailServiceImpl implements MailService {
     @Override
     public void processContactMail(MailRequest mail) {
         try {
+            Locale.setDefault(Locale.forLanguageTag(mailBotLanguageCode));
             mailSender.send(buildContactMail(mail));
+            Locale.setDefault(Locale.forLanguageTag(mail.getLanguageCode()));
             mailSender.send(buildThanksForContactingMail(mail));
         } catch (MessagingException e) {
             throw new ServerErrorException("Not proper mail data.", e);
@@ -44,7 +50,7 @@ public class MailServiceImpl implements MailService {
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED, StandardCharsets.UTF_8.name());
         helper.setFrom(mail.getEmail());
         helper.setTo(mailBotAddress);
-        helper.setSubject(mail.getEmail() + " - " + mail.getName());
+        helper.setSubject(mail.getName() + " - " + mail.getEmail());
         helper.setText(templateEngine.process(MAIL, contextHelper.buildContactMailContext(mail)), true);
         return mimeMessage;
     }
@@ -54,7 +60,7 @@ public class MailServiceImpl implements MailService {
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED, StandardCharsets.UTF_8.name());
         helper.setFrom(mailBotAddress);
         helper.setTo(mail.getEmail());
-        helper.setSubject(contact);
+        helper.setSubject(loc.localize("mail.contact.subject"));
         helper.setText(templateEngine.process(CONTACT_THANK_YOU_MAIL, contextHelper.buildThanksMailContext(mail)), true);
         return mimeMessage;
     }
